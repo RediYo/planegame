@@ -156,8 +156,22 @@ public class Enemy {
             if (this.eSpeed == 0) {//与boss机碰撞
                 this.bossblood--;//boss机血量减一
                 if(this.bossblood <= 0) {//判断boss机血量是否等于0
-                    bulletid++;//boss子弹标识加一
-                    enemy.exist = false;//该boss为死亡状态
+
+                    if (this.bossid == 4 && bosscore == 4) {//判断是否为第一个boss
+                        sumscore += 200;//打败第一个boss加200
+                        bosscore++;//boss分数id+1，避免因线程问题分数多次加载
+                        bulletid++;//子弹标识加一，一般只要boss死亡都会加一，为下一个boss装载不同子弹做准备
+                    }else if (this.bossid == 5 && bosscore == 5) {//判断是否为第二个boss
+                        sumscore += 500;//打败第二个boss加500
+                        bosscore++;
+                        bulletid++;
+                    }else if (bossid == 6 && bosscore == 6) {//判断是否为第三个boss
+                        sumscore += 1000;//打败终极boss加1000
+                        bosscore++;
+                        bulletid++;
+                        victory = true;//游戏胜利标识置为true
+                    }
+                    enemy.exist = false;
                 }
             } else {
                 enemy.exist = false;//普通敌机直接死亡
